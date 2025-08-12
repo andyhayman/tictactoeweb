@@ -48,6 +48,14 @@ button {
     cursor: pointer;
 }
 
+.cell.x-mark {
+    color: red;
+}
+
+.cell.o-mark {
+    color: blue;
+}
+
 button:hover {
     background: #45a049;
 }

@@ -9,7 +9,14 @@ document.addEventListener('DOMContentLoaded', () => {
         cells.forEach(cell => {
             const row = cell.getAttribute('data-row');
             const col = cell.getAttribute('data-col');
-            cell.textContent = board[row][col] === ' ' ? '' : board[row][col];
+            const value = board[row][col];
+            cell.textContent = value === ' ' ? '' : value;
+            cell.classList.remove('x-mark', 'o-mark');
+            if (value === 'X') {
+                cell.classList.add('x-mark');
+            } else if (value === 'O') {
+                cell.classList.add('o-mark');
+            }
         });
 
         if (gameState.gameOver) {
