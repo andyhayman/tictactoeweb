@@ -1,6 +1,7 @@
 package com.example.tictactoeweb.controller;
 
 import com.example.tictactoeweb.model.Game;
+import com.example.tictactoeweb.model.GameMode;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -21,8 +22,11 @@ public class GameController {
     }
 
     @PostMapping("/reset")
-    public Game resetGame() {
-        game = new Game();
+    public Game resetGame(@RequestParam(required = false) GameMode gameMode) {
+        game = new Game(gameMode != null ? gameMode : GameMode.PLAYER_VS_PLAYER);
+        if (gameMode == GameMode.COMPUTER_VS_COMPUTER) {
+            game.makeMove(0, 0); // Start the computer vs computer game
+        }
         return game;
     }
 }

@@ -15,6 +15,33 @@ h1 {
     color: #666;
 }
 
+.game-modes {
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.mode-button {
+    padding: 10px 20px;
+    font-size: 1em;
+    background: #f0f0f0;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.mode-button:hover {
+    background: #e0e0e0;
+}
+
+.mode-button.active {
+    background: #4CAF50;
+    color: white;
+    border-color: #45a049;
+}
+
 .game-board {
     display: grid;
     grid-template-columns: repeat(3, 1fr);

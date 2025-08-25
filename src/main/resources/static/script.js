@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const cells = document.querySelectorAll('.cell');
     const status = document.getElementById('status');
     const resetButton = document.getElementById('resetButton');
+    const modeButtons = document.querySelectorAll('.mode-button');
+    let currentMode = 'PLAYER_VS_PLAYER';
 
     // Update the game board UI
     function updateBoard(gameState) {
@@ -44,9 +46,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Reset the game
-    async function resetGame() {
+    async function resetGame(gameMode = currentMode) {
         try {
-            const response = await fetch('/api/game/reset', {
+            const response = await fetch('/api/game/reset' + (gameMode ? `?gameMode=${encodeURIComponent(gameMode)}` : ''), {
                 method: 'POST'
             });
             const gameState = await response.json();
@@ -55,6 +57,24 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('Error:', error);
         }
     }
+
+    // Set up mode buttons
+    modeButtons.forEach(button => {
+        button.addEventListener('click', (event) => {
+            event.preventDefault();
+            modeButtons.forEach(b => b.classList.remove('active'));
+            button.classList.add('active');
+            
+            const modeMap = {
+                'pvp': 'PLAYER_VS_PLAYER',
+                'pvc': 'PLAYER_VS_COMPUTER',
+                'cvc': 'COMPUTER_VS_COMPUTER'
+            };
+            
+            currentMode = modeMap[button.id];
+            resetGame(currentMode);
+        });
+    });
 
     // Get initial game state
     async function getGameState() {

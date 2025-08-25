@@ -5,8 +5,14 @@ public class Game {
     private char currentPlayer;
     private boolean gameOver;
     private String winner;
+    private GameMode gameMode;
+    private boolean isComputerTurn;
 
     public Game() {
+        this(GameMode.PLAYER_VS_PLAYER);
+    }
+
+    public Game(GameMode gameMode) {
         board = new char[3][3];
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -16,10 +22,16 @@ public class Game {
         currentPlayer = 'X';
         gameOver = false;
         winner = null;
+        this.gameMode = gameMode;
+        this.isComputerTurn = gameMode == GameMode.COMPUTER_VS_COMPUTER;
     }
 
     public boolean makeMove(int row, int col) {
-        if (row < 0 || row >= 3 || col < 0 || col >= 3 || board[row][col] != ' ' || gameOver) {
+        if (gameOver || (isComputerTurn && gameMode != GameMode.PLAYER_VS_PLAYER)) {
+            return false;
+        }
+
+        if (row < 0 || row >= 3 || col < 0 || col >= 3 || board[row][col] != ' ') {
             return false;
         }
 
@@ -32,10 +44,33 @@ public class Game {
             gameOver = true;
             winner = "Draw";
         } else {
-            currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
+            switchPlayer();
+            if (!gameOver && (gameMode == GameMode.COMPUTER_VS_COMPUTER || 
+                (gameMode == GameMode.PLAYER_VS_COMPUTER && isComputerTurn))) {
+                makeComputerMove();
+            }
         }
         
         return true;
+    }
+
+    private void switchPlayer() {
+        currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
+        if (gameMode == GameMode.PLAYER_VS_COMPUTER) {
+            isComputerTurn = !isComputerTurn;
+        }
+    }
+
+    private void makeComputerMove() {
+        // Simple computer strategy: find first empty cell
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (board[i][j] == ' ') {
+                    makeMove(i, j);
+                    return;
+                }
+            }
+        }
     }
 
     private boolean checkWin() {
