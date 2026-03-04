@@ -3,30 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Noughts and Crosses</title>
+    <meta name="description" content="Play Tic Tac Toe online against a friend or the computer">
+    <title>Tic Tac Toe - Play Online</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>Noughts and Crosses</h1>
-        <div class="game-modes">
-            <button id="pvp" class="mode-button active">Player vs Player</button>
-            <button id="pvc" class="mode-button">Player vs Computer</button>
-            <button id="cvc" class="mode-button">Computer vs Computer</button>
+        <header class="header">
+            <h1>🎮 Tic Tac Toe</h1>
+            <p class="subtitle">Play online with different game modes</p>
+        </header>
+
+        <div class="content">
+            <div id="loadingIndicator" class="loading-indicator" style="display: none;">
+                <div class="spinner"></div>
+                <p>Loading game...</p>
+            </div>
+
+            <div class="game-modes">
+                <button id="pvp" class="mode-button active" title="Two players on the same device">
+                    <span class="mode-icon">👥</span> Player vs Player
+                </button>
+                <button id="pvc" class="mode-button" title="Play against computer AI">
+                    <span class="mode-icon">🤖</span> Player vs Computer
+                </button>
+                <button id="cvc" class="mode-button" title="Watch the computer play itself">
+                    <span class="mode-icon">⚙️</span> Computer vs Computer
+                </button>
+            </div>
+
+            <div id="status" class="status">Player X's turn</div>
+
+            <div class="game-container">
+                <div class="game-board">
+                    <div class="cell" data-row="0" data-col="0"></div>
+                    <div class="cell" data-row="0" data-col="1"></div>
+                    <div class="cell" data-row="0" data-col="2"></div>
+                    <div class="cell" data-row="1" data-col="0"></div>
+                    <div class="cell" data-row="1" data-col="1"></div>
+                    <div class="cell" data-row="1" data-col="2"></div>
+                    <div class="cell" data-row="2" data-col="0"></div>
+                    <div class="cell" data-row="2" data-col="1"></div>
+                    <div class="cell" data-row="2" data-col="2"></div>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button id="resetButton" class="btn-reset">New Game</button>
+            </div>
+
+            <div id="errorMessage" class="error-message" style="display: none;"></div>
         </div>
-        <div id="status" class="status">Player X's turn</div>
-        <div class="game-board">
-            <div class="cell" data-row="0" data-col="0"></div>
-            <div class="cell" data-row="0" data-col="1"></div>
-            <div class="cell" data-row="0" data-col="2"></div>
-            <div class="cell" data-row="1" data-col="0"></div>
-            <div class="cell" data-row="1" data-col="1"></div>
-            <div class="cell" data-row="1" data-col="2"></div>
-            <div class="cell" data-row="2" data-col="0"></div>
-            <div class="cell" data-row="2" data-col="1"></div>
-            <div class="cell" data-row="2" data-col="2"></div>
-        </div>
-        <button id="resetButton">Reset Game</button>
+
+        <footer class="footer">
+            <p>&copy; 2026 Tic Tac Toe Web App | <a href="https://github.com" target="_blank">Source Code</a></p>
+        </footer>
     </div>
     <script src="script.js"></script>
 </body>

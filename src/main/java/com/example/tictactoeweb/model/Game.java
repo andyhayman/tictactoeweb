@@ -66,7 +66,22 @@ public class Game {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 if (board[i][j] == ' ') {
-                    makeMove(i, j);
+                    board[i][j] = currentPlayer;
+                    
+                    if (checkWin()) {
+                        gameOver = true;
+                        winner = String.valueOf(currentPlayer);
+                    } else if (isBoardFull()) {
+                        gameOver = true;
+                        winner = "Draw";
+                    } else {
+                        switchPlayer();
+                        // Don't recursively call makeComputerMove to avoid stack overflow
+                        if (!gameOver && gameMode == GameMode.COMPUTER_VS_COMPUTER) {
+                            // For CvC, schedule next move if game not over
+                            makeComputerMove();
+                        }
+                    }
                     return;
                 }
             }
@@ -125,5 +140,20 @@ public class Game {
 
     public String getWinner() {
         return winner;
+    }
+
+    public GameMode getGameMode() {
+        return gameMode;
+    }
+
+    public boolean isComputerTurn() {
+        return isComputerTurn;
+    }
+
+    public void startComputerVsComputer() {
+        if (gameMode == GameMode.COMPUTER_VS_COMPUTER) {
+            // Make the first move for Computer vs Computer
+            makeComputerMove();
+        }
     }
 }
